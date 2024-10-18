@@ -1,24 +1,36 @@
-# README
+# Project Title
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Technologies Used
 
-Things you may want to cover:
+- Ruby on Rails (version: 7.0.7)
+- PostgreSQL
+- Active Storage
+- Redis
+- Sidekiq
 
-* Ruby version
+## Features
 
-* System dependencies
+- User registration, login, and logout
+- CRUD operations for posts
+- Image uploads using Active Storage
+- Pagination and N+1 query optimization
+- Role-based access control for post management
+- API endpoints for front-end integration
+- Background processing with Sidekiq
+- Testing with RSpec
 
-* Configuration
+## Installation
 
-* Database creation
+### Prerequisites
 
-* Database initialization
+- Ruby (version: 3.2.2)
+- Rails (version: 7.0.7)
+- PostgreSQL
+- Redis (if applicable)
 
-* How to run the test suite
+### Steps
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your_username/your_project.git
+   cd your_project
