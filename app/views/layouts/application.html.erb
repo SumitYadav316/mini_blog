@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MiniBlog</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <nav>
+      <% if user_signed_in? %>
+      <%= button_to 'LogOut', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger' %>
+      <%= link_to 'Edit Profile', edit_user_registration_path, class: 'btn btn-primary' %>
+
+
+      <% else %>
+        <%= link_to 'Sign Up', new_user_registration_path, class: 'btn btn-primary' %>
+        <%= link_to 'Sign In', new_user_session_path, class: 'btn btn-secondary' %>
+      <% end %>
+    </nav>
+    <%= yield %>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+<%= link_to 'Back to Posts', posts_path %>
+
+<h5>Title: <%= @post.title %></h5>
+<p>Content: <%= @post.content %></p>
+<% if @post.image.attached? %>
+  <div>
+    <strong>Image:</strong>
+    <%= image_tag @post.image, size: "100x100" %>  <!-- Display the image -->
+  </div>
+<% end %>
+
+<h3>Comments</h3>
+<% @post.comments.each do |comment| %>
+  <div>
+    <strong>Name: <%= comment.user&.name %></strong>
+    <p><%= comment.body %></p>
+    <% if comment.user == current_user %>
+      <%= link_to 'Edit Comment', edit_post_comment_path(@post, comment) %>
+      <%= button_to 'Delete Comment', post_comment_path(@post, comment), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+    <% end %>
+  </div>
+<% end %>
+
+<% if user_signed_in? %>
+  <%= form_with(model: [@post, @comment], local: true) do |form| %>
+    <div class="field">
+      <%= form.label :body, "Add a Comment:" %>
+      <%= form.text_area :body, rows: 4 %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit "Submit", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+<% else %>
+  <p>Please <%= link_to 'sign in', new_user_session_path %> to leave a comment.</p>
+<% end %>

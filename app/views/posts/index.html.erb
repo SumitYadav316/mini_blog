@@ -1,0 +1,110 @@
+<%# <% cache 'homepage_posts' do %> %>
+  <%= form_with(url: posts_path, method: :get, local: true) do %>
+    <div class="field">
+      <%= label_tag :query, "Search Posts" %>
+      <%= text_field_tag :query, params[:query], placeholder: "Search by title or content" %>
+      <%= submit_tag "Search", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+
+  <h1>All Posts</h1>
+  <% if user_signed_in? && current_user.author? %>
+    <%= link_to 'New Post', new_post_path, class: 'btn btn-success' %>
+  <% end %>
+
+  <% @posts.each do |post| %>
+    <div>
+      <h2>Title: <%= link_to post.title, post_path(post) %></h2>
+      <p>Content: <%= truncate(post.content, length: 100) %></p>
+      <% if post.image.attached? %>
+        <div>
+          <strong>Image:</strong>
+          <%= image_tag post.image, size: "100x100" %>
+        </div>
+      <% end %>
+
+      <% if policy(post).edit? %>
+        <%= link_to 'Edit Post', edit_post_path(post), class: 'btn btn-secondary' %>
+      <% end %>
+      
+      <% if policy(post).destroy? %>
+        <%= button_to 'Delete post', post_path(post), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+      <% end %>
+
+      <%= link_to "Add Comments", post_path(post), class: "btn btn-secondary" %>
+    </div>
+  <% end %>
+
+  <%= will_paginate @posts, previous_label: 'Previous', next_label: 'Next', class: "pagination" %>
+  
+  <%= link_to 'Back to Posts', posts_path %>
+<%# end %>
+
+<style type="text/css">
+	.posts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; 
+  margin-bottom: 20px; 
+}
+
+.post-card {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 15px;
+  background-color: #f9f9f9; 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.post-title {
+  font-size: 1.5em; 
+  margin-bottom: 10px; 
+}
+
+.post-content {
+  margin-bottom: 10px; 
+  line-height: 1.5; 
+}
+
+.post-image {
+  margin-bottom: 15px; 
+}
+
+.img-small {
+  max-width: 100%; 
+  height: auto; 
+  width: 150px; 
+  border-radius: 5px; 
+}
+
+.comments-header {
+  font-size: 1.2em; 
+  margin-top: 20px; 
+}
+
+.comments-section {
+  margin-bottom: 15px; 
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+}
+
+.comment {
+  margin-bottom: 10px;
+}
+
+.field {
+  margin-bottom: 15px; 
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+</style>
